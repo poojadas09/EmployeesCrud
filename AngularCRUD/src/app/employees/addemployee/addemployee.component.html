@@ -1,0 +1,60 @@
+<div class="container">
+    <div class="row">
+        <div class="col"></div>
+        <div class="col">
+            <form [formGroup]="addEmployeeForm" (ngSubmit)="onEmployeeFormSubmit()">
+                <div class="form-group">
+                    <label for="firstname">
+                        First Name
+                    </label>
+                    <input id="firstname" class="form-control" [value]="EmployeeForm.firstname.value" type="text" placeholder="First Name"
+                        formControlName="firstname">
+                </div>
+                <div class="form-group">
+                    <label for="lastname">
+                        Last Name
+                    </label>
+                    <input id="lastname" class="form-control" [value]="EmployeeForm.lastname.value" placeholder="Last Name" type="text"
+                        formControlName="lastname">
+                </div>
+                <div class="form-group">
+                    <label for="hiredate">
+                        Hire Date
+                    </label>
+                    <input id="hiredate" class="form-control" [value]="EmployeeForm.hiredate.value | date:'yyyy-MM-dd'" type="date" formControlName="hiredate">
+                </div>
+                <div class="form-group">
+                    <label for="address">
+                        Job Role
+                    </label>
+                    <select id="jobrole" class="form-control" [value]="EmployeeForm.jobrole.value" formControlName="jobrole">
+                        <option value="">
+                            Select
+                        </option>
+                        <option value="CEO">
+                            CEO
+                        </option>
+                        <option value="VP">
+                            VP
+                        </option>
+                        <option value="MANAGER">
+                            MANAGER
+                        </option>
+                        <option value="LACKEY">
+                            LACKEY
+                        </option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-info">
+                        Save
+                    </button> &nbsp;
+                    <button type="button" class="btn btn-info" routerLink="/">
+                        Back
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div class="col"></div>
+    </div>
+</div>

@@ -1,13 +1,16 @@
 'use strict';
 
 const express = require('express');
+var cors = require('cors')
 const mysqlConnection = require('../connection');
 const router = express.Router();
 
+router.options('*', cors()) // include before other routes
+
 
 /* GET employees listing. */
-router.get('/', function (req, res) {
-  let query = "Select * from employees";
+router.get('/getEmployee', function (req, res) {
+  let query = "Select * from employee";
   mysqlConnection.query(query, (err, rows) => {
     if (!err) {
       console.log(rows);
@@ -17,47 +20,55 @@ router.get('/', function (req, res) {
     }
   });
 });
-
-//route for insert data
-router.post('/save', (req, res) => {
-  let data = {
-    id: 9,
-    firstname: req.body.firstname,
-    lastname: req.body.lastname,
-    hireDate: req.body.hireDate,
-    role: req.body.role
-  };
-  let query = "INSERT INTO employees SET ?";
-  mysqlConnection.query(query, data, (err, results) => {
-    if (err) {
+router.get('/getEmployeebyId/:id', function (req, res) {
+  var id = req.params.id;
+  let query = "Select * from employee WHERE id = " + id;
+  mysqlConnection.query(query, (err, rows) => {
+    if (!err) {
+      console.log(rows);
+      return res.send(rows[0]);
+    } else {
       console.log(err);
     }
-    res.redirect('/');
+  });
+});
+
+//route for insert data
+router.post('/saveEmployee', (req, res) => {
+  let data = {
+    firstname: req.body.firstname,
+    lastname: req.body.lastname,
+    hiredate: req.body.hiredate,
+    jobrole: req.body.jobrole
+  };
+  let query = "INSERT INTO employee SET ?";
+  mysqlConnection.query(query, data, (err, results) => {
+    if (err) throw err;
+    console.log("1 record inserted");
   });
 });
 
 //route for update data
-router.put('/update/:id', (req, res) => {
+router.put('/updateEmployee/:id', (req, res) => {
   var id = req.params.id;
-  let query = `UPDATE employees 
+  let query = `UPDATE employee 
                SET firstname='` + req.body.firstname + `', 
                    lastname='` + req.body.lastname + `' , 
-                   hireDate='` + req.body.hireDate + `'
+                   hireDate='` + req.body.hiredate + `',
+                   jobrole='` + req.body.jobrole + `'
                WHERE id=` + id;
-  console.log(query);
   mysqlConnection.query(query, (err, results) => {
     if (err) throw err;
-    res.redirect('/');
   });
 });
 
 //route for delete data
-router.delete('/delete/:id', (req,res) => {
+router.delete('/deleteEmployee/:id', (req, res) => {
   var id = req.params.id;
-  let query = "DELETE FROM employees WHERE id=" + id + "";
+  console.log(id);
+  let query = "DELETE FROM employee WHERE id=" + id + "";
   mysqlConnection.query(query, (err, results) => {
     if (err) throw err;
-    res.redirect('/');
   });
 });
 

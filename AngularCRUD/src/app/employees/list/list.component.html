@@ -1,0 +1,30 @@
+<div class="container">
+    <div class="row">
+        <button type="button" class="btn btn-primary" routerLink="/addemployee">Add New Employee</button>
+    </div>
+    <div class="row">
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Hired Date</th>
+                    <th scope="col">Job Role</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let employee of employeeData">
+                    <td>{{employee.firstname}}</td>
+                    <td>{{employee.lastname}}</td>
+                    <td>{{employee.hiredate | date:'longDate'}}</td>
+                    <td>{{employee.jobrole}}</td>
+                    <td>
+                        <button class="btn btn-info btn-sm" (click)="editEmployee(employee.id)"> Edit</button>&nbsp;
+                        <button class="btn btn-danger btn-sm" (click)="onDelete(employee.id)"> Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
