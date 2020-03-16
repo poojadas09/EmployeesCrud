@@ -31,8 +31,8 @@ export class ListComponent implements OnInit {
     if (conf) {
       this.employeeService.deleteEmployeeDetails(employeeid).subscribe((data) => {
         this.ngOnInit();
-        this.router.navigate(['/']);
       });
+      this.ngOnInit();
     }
     return;
   }
